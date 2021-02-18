@@ -54,8 +54,8 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 
 // compare function to return nodes in descending order
 bool Compare(const RouteModel::Node *a, const RouteModel::Node *b) {
-  int f1 = a->g_value + a->h_value; // f(a) = g1 + h1
-  int f2 = b->g_value + b->h_value; // f(b) = g2 + h2
+  float f1 = a->g_value + a->h_value; // f(a) = g1 + h1
+  float f2 = b->g_value + b->h_value; // f(b) = g2 + h2
   return f1 > f2; 
 }
 
@@ -106,10 +106,11 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 // - Store the final path in the m_Model.path attribute before the method exits. This path will then be displayed on the map tile.
 
 void RoutePlanner::AStarSearch() {
-    RouteModel::Node *current_node = start_node;
-
+    RouteModel::Node *current_node = nullptr;
+	
     // TODO: Implement your solution here.
-  	open_list.push_back(current_node);
+  	start_node->visited = true;
+  	open_list.push_back(start_node);
 
   	while(open_list.size() > 0) {
       	current_node = NextNode();
